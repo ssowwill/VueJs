@@ -1,0 +1,354 @@
+视频教程：
+https://www.bilibili.com/video/BV18E411a7mC?p=1&spm_id_from=pageDriver
+
+1.导入vue的cdn
+<script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+<script src="https://cdn.bootcss.com/vue-router/2.7.0/vue-router.min.js"></script>
+
+2.第一个vue程序
+<body>
+	<!--view层模板-->
+    <div id="app">
+        {{message}}
+    </div>
+
+    <!--1.导入vue的cdn-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el:"#app",
+
+			//model:数据
+            data: {
+                message: "hello vue"
+            }
+        });
+    </script>
+
+	<!--vm对象和显示视图的id=“app”已经实现了双向绑定-->
+    <!--在网页F12的console输入vm.message="xxxx" 可以验证>
+</body>
+
+3.v-bind 指令绑定message(demo1-1.html)
+修改view层为：
+<div id="app">
+    <span v-bind:title="message">
+        鼠标悬停几秒钟查看此处动态绑定的提示信息！
+    </span>
+</div>
+
+4.重点：指令带有前缀 v-，以表示它们是vue提供的特殊特性。
+可能你已经猜到了，它们会在渲染的DOM上应用特殊的响应式行为。
+在这里，该指令的意思是：“将这个元素节点的title特性和Vue实例的
+message属性保持一致。
+
+5.判断；v-if，v-else（demo2.html）
+示例1：
+    <div id="app">
+        <h1 v-if="ok">Yes</h1>
+        <h1 v-else>No</h1>
+        <!-- vm.ok=false 验证No-->
+    </div>
+
+     //model:数据
+            data: {
+                ok: true
+            }
+示例2：
+      <div id="app1">
+          <h1 v-if="type==='A'">A</h1>
+          <h1 v-else-if="type==='B'">B</h1>
+          <h1 v-else-if="type==='C'">C</h1>
+          <h1 v-else>D</h1>
+          <!-- vm1.type='B' 验证B-->
+      </div>
+
+      //model:数据
+              data: {
+                  type:'A'
+              }
+
+6.循环
+<div id="app">
+    <li v-for="(item,index) in items">
+        {{item.message}}--{{index}}
+    </li>
+</div>
+
+<!--1.导入vue的cdn-->
+<script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#app",
+
+        //model:数据
+        data: {
+            items:[
+                {message:'狂神说java'},
+                {message:'狂神说前端'},
+                {message:'狂神说运维'},
+            ]
+        }
+    });
+</script>
+
+7.事件处理(绑定事件)：
+我们可以使用 v-on 指令 (通常缩写为 @ 符号) 来监听 DOM 事件，
+并在触发事件时执行一些 JavaScript。用法为 v-on:click="methodName" 或使用快捷方式 @click="methodName"
+    <!--view层模板-->
+    <div id="app">
+        <button v-on:click="sayHi">click me</button>
+    </div>
+
+    <!--1.导入vue的cdn-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            //model:数据
+            data: {
+                message: "hello vue"
+            },
+            methods:{ //方法必须定义在Vue的Methods对象中，v-on：事件
+                sayHi: function () {
+                    alert(this.message);
+                }
+            }
+        });
+    </script>
+
+8.vue的双向绑定
+你可以用v-model指令在表单<input>、<textarea>及<select>元素上创建
+双向数据绑定。它会根据控件类型自动选取正确的方法来更新元素。（demo5.html）
+
+9.vue的组件讲解
+组件是可复用的vue实例，说白了就是一组可以重复使用的模板，跟JSTL的自定义标签、
+Thymeleaf的th：fragment等框架有着异曲同工之妙。通常一个应用会以一颗嵌套的
+组件树的形式来组织。
+
+定义一个vue组件component，使用component定义一个标签(demo6.html)
+  <!--view层模板-->
+  <div id="app">
+      <!--组件：传递给组件中的值：props-->
+      <!--简言之：通过v-for输出的值通过props传递给v-bind-->
+      <message v-for="item in items" v-bind:Item="item"></message>
+  </div>
+
+  <!--1.导入vue的cdn-->
+  <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+  <script>
+      //此处的message为此函数的命名
+      Vue.component("message",{
+          //props属性传递参数
+          props:[`Item`],
+          template: '<li>{{Item}}</li>'
+      });
+
+      var vm = new Vue({
+          el:"#app",
+          data:{
+              items:["java","linux","前端"]
+          }
+      });
+  </script>
+
+10.什么是Axios（vue无自带的网络通信axios是其推荐的框架方案）
+Axios是一个开源的可以用在浏览器和NodeJS的异步通信框架，
+她的主要作用就是实现AJAX异步通信，（用于网络通信）
+cdn:
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+生命周期：
+vue实例有一个完整的生命周期，也就是从开始创建、初始化数据、编译模板、挂载DOM
+、渲染→更新→渲染、卸载等一系列过程，我们称这是vue的生命周期。通俗说就是vue实
+例从创建到销毁的过程，就是生命周期。
+在vue的整个生命周期中，它提供一系列的事件，可以让我们在事件触发时注册JS方法，
+可以让我们用自己注册的js方法控制整个大局，在这些事件响应方法中的this直接指向
+的是vue的实例。（demo7.html）
+
+<!-- v-clock：解决闪烁问题-->
+    <style>
+        [v-clock]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!--view层模板-->
+    <div id="vue" v-clock>
+        <div>{{info.name}}</div>
+        <div>{{info.address.city}}</div>
+
+        <a v-bind:href="info.url">点击跳转</a>
+    </div>
+
+    <!--1.导入vue的cdn-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el:"#vue",
+            data(){
+                return{
+                    //请求的返回参数合适，必须和json字符串一样
+                    info:{
+                        name: null,
+                        address:{
+                            street: null,
+                            city: null,
+                            country: null
+                        },
+                        url: null
+                    }
+                }
+            },
+            mounted(){//钩子函数 链式编程 ES6新特性
+                axios.get('../data.json').then(response=>(this.info=response.data));
+            }
+        });
+    </script>
+</body>
+
+11.计算属性
+计算属性的重点突出在属性两个字上（属性是名词），首先它是个属性其次这个属性
+有计算的能力（计算是动词），这里的计算就是个函数；简单点说，它就是一个能够
+将计算结果缓存起来的属性（将行为转化成静态的属性），
+仅此而已；可以想象为缓存！
+计算属性：计算出来的结果，保存在属性中~，内存中运行：虚拟DOM
+（demo8.html）
+<!--view层模板-->
+<div id="app">
+    <p>currentTime1 {{ currentTime1()}}</p>
+    <p>currentTime2 {{ currentTime2()}}</p>
+</div>
+
+<!--1.导入vue的cdn-->
+<script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            message:"hello"
+        },
+        methods:{
+            currentTime1: function () {
+                return Date.now(); //返回一个时间戳
+            }
+        },
+        computed:{ //计算属性：methods 和 computed 方法名不能重名，重名后只能调用methods的方法
+            currentTime2: function () {
+                this.message; //计算属性重点，每次message变化后计算属性才变化
+                return Date.now(); //返回一个时间戳
+            }
+        }
+    });
+</script>
+
+结论：
+调用方法时，每次都需要进行计算，既然有计算过程则必定产生系统开销，那如果
+这个结果是不经常变化的，此时就可以考虑将这个结果缓存起来，采用计算属性可
+以很方便的做到这一点，计算属性的主要特性就是为了将不经常变化的计算结果进
+行缓存，以节约我们的系统开销。
+
+
+12.插槽slot（重点）(demo9.html)
+<!--view层模板-->
+    <div id="app">
+        <todo>
+            <todo-title slot="todo-title" v-bind:title="title"></todo-title>
+            <todo-items slot="todo-items" v-for="item in todoItems" v-bind:item="item"></todo-items>
+        </todo>
+    </div>
+
+    <!--1.导入vue的cdn-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+    <script>
+        //slot:插槽
+        Vue.component("todo",{
+           template: '<div>\
+                            <slot name="todo-title"></slot>\
+                            <ul>\
+                                <slot name="todo-items"></slot>\
+                            </ul>\
+                      </div>'
+        });
+
+        Vue.component("todo-title",{
+            props: ['title'],
+            template: '<div>{{title}}</div>'
+        });
+
+        Vue.component("todo-items",{
+            props: ['item'],
+            template: '<div>{{item}}</div>'
+        });
+
+        var vm = new Vue({
+            el:"#app",
+            //model:数据
+            data: {
+                title: "秦老师列表",
+                todoItems: ['狂神说java','狂神说前端','狂神说Linux']
+            }
+        });
+    </script>
+
+13.自定义事件内容分发（demo9-1.html）
+通过以上代码不难发现，数据项在vue的实例中，但删除操作要在组件中完成，那么组件
+如何才能删除vue实例中的数据呢？此时就涉及到参数传递与事件分发了，vue为我们提
+供了自定义事件的功能很好的帮助了这个问题；使用this.$emit('自定义事件名',参
+数)，操作过程如下：
+ <!--view层模板-->
+    <div id="app">
+        <todo>
+            <todo-title slot="todo-title" v-bind:title="title"></todo-title>
+            <todo-items slot="todo-items" v-for="(item,index) in todoItems"
+                        :item="item" :index="index" v-on:remove="removeItems(index)"></todo-items>
+        </todo>
+    </div>
+
+    <!--1.导入vue的cdn-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+    <script>
+        //slot:插槽
+        Vue.component("todo",{
+           template: '<div>\
+                            <slot name="todo-title"></slot>\
+                            <ul>\
+                                <slot name="todo-items"></slot>\
+                            </ul>\
+                      </div>'
+        });
+
+        Vue.component("todo-title",{
+            props: ['title'],
+            template: '<div>{{title}}</div>'
+        });
+
+        Vue.component("todo-items",{
+            props: ['item','index'],
+            //只能绑定当前组件的方法
+            template: '<li>{{index}}---{{item}} <button @click="remove">删除</button> </li> ',
+            methods: {
+                remove: function(index) {
+                    //this.$emit自定义事件分发
+                    this.$emit('remove',index);
+                }
+            }
+        });
+
+        var vm = new Vue({
+            el:"#app",
+            //model:数据
+            data: {
+                title: "秦老师列表",
+                todoItems: ['狂神说java','狂神说前端','狂神说Linux']
+            },
+            methods: {
+                removeItems: function(index) {
+                    console.log("删除了"+this.todoItems[index]+"ok");
+                    this.todoItems.splice(index,1);
+                }
+            }
+        });
+    </script>

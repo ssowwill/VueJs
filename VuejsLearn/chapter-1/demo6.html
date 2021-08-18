@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--view层模板-->
+<div id="app">
+    <!--组件：传递给组件中的值：props-->
+    <!--简言之：通过v-for输出的值通过props传递给v-bind-->
+    <message v-for="item in items" v-bind:Item="item"></message>
+</div>
+
+<!--1.导入vue的cdn-->
+<script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+<script>
+    //此处的message为此函数的命名
+    Vue.component("message",{
+        //props属性传递参数
+        props:[`Item`],
+        template: '<li>{{Item}}</li>'
+    });
+
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            items:["java","linux","前端"]
+        }
+    });
+</script>
+</body>
+</html>

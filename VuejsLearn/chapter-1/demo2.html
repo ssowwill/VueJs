@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--1-->
+<!--view层模板-->
+<div id="app">
+    <h1 v-if="ok">yes</h1>
+    <h1 v-else>no</h1>
+    <!-- vm.ok=false 验证no-->
+</div>
+
+<!--1.导入vue的cdn-->
+<script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#app",
+
+        //model:数据
+        data: {
+            ok: true
+        }
+    });
+</script>
+
+<!--2-->
+<!--view层模板-->
+<div id="app1">
+    <h1 v-if="type==='A'">A</h1>
+    <h1 v-else-if="type==='B'">B</h1>
+    <h1 v-else-if="type==='C'">C</h1>
+    <h1 v-else>D</h1>
+    <!-- vm1.type='B' 验证B-->
+</div>
+
+<!--1.导入vue的cdn-->
+<script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+<script>
+    var vm1 = new Vue({
+        el:"#app1",
+
+        //model:数据
+        data: {
+            type:'A'
+        }
+    });
+</script>
+</body>
+</html>

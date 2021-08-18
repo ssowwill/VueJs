@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--view层模板-->
+<div id="app">
+    <p>currentTime1 {{ currentTime1()}}</p>
+    <p>currentTime2 {{ currentTime2()}}</p>
+</div>
+
+<!--1.导入vue的cdn-->
+<script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            message:"hello"
+        },
+        methods:{
+            currentTime1: function () {
+                return Date.now(); //返回一个时间戳
+            }
+        },
+        computed:{ //计算属性：methods 和 computed 方法名不能重名，重名后只能调用methods的方法
+            currentTime2: function () {
+                this.message; //计算属性重点，每次message变化后计算属性才变化
+                return Date.now(); //返回一个时间戳
+            }
+        }
+    });
+</script>
+</body>
+</html>

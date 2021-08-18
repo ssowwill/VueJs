@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--view层模板-->
+    <div id="app">
+        <todo>
+            <todo-title slot="todo-title" v-bind:title="title"></todo-title>
+            <todo-items slot="todo-items" v-for="item in todoItems" v-bind:item="item"></todo-items>
+        </todo>
+    </div>
+
+    <!--1.导入vue的cdn-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+    <script>
+        //slot:插槽
+        Vue.component("todo",{
+           template: '<div>\
+                            <slot name="todo-title"></slot>\
+                            <ul>\
+                                <slot name="todo-items"></slot>\
+                            </ul>\
+                      </div>'
+        });
+
+        Vue.component("todo-title",{
+            props: ['title'],
+            template: '<div>{{title}}</div>'
+        });
+
+        Vue.component("todo-items",{
+            props: ['item'],
+            template: '<div>{{item}}</div>'
+        });
+
+        var vm = new Vue({
+            el:"#app",
+            //model:数据
+            data: {
+                title: "秦老师列表",
+                todoItems: ['狂神说java','狂神说前端','狂神说Linux']
+            }
+        });
+    </script>
+</body>
+</html>

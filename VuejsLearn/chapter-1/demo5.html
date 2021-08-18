@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--view层模板-->
+    <div id="app">
+
+        输入的文本：<input type="text" v-model="message"> {{message}}
+        <hr>
+        输入的文本：<textarea type="text" v-model="message"></textarea> {{message}}
+    </div>
+
+    <!--1.导入vue的cdn-->
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            //model:数据
+            data: {
+                message: "123"
+            }
+        });
+    </script>
+</body>
+</html>
